@@ -13,41 +13,56 @@ const Ex04 = () => {
     //  ※ 이 때, 내가 원하는 결과가 정확하게 나오지 않아도 괜찮습니다
     // 4. 유저가 초기화 버튼을 누르면 다시 주사위는 1-1 로 돌아간다.(resetDice)
 
-    const [myDice, setMyDice] = useState(0)
-    const [comDice, setComDice] = useState(0)
+    const [myDice, setMyDice] = useState(1)
+    const [comDice, setComDice] = useState(1)
+    const [result, setResult] = useState('게임 전')
 
+    // 램덤 주사위를 만드는 방법 중 하나 (랜덤한 숫자를 뽑아내는 자판기)
+
+    const makeRandom = ()=>{
+        return parseInt(Math.random()*6)+1
+    }
     const throwDice = (e)=>{
         console.log('던지기')
-        console.log('랜덤 주사위', parseInt(Math.random()*6)+1)
+        console.log('랜덤 주사위', makeRandom())
         console.log('내가 던진 주사위는?', e.target.innerText)
 
-        setComDice(parseInt(Math.random()*6)+1)
-        setMyDice(parseInt(Math.random()*6)+1)
+        setComDice(makeRandom())
+        setMyDice(makeRandom())
+
+        if(myDice === comDice){
+            setResult('동점')
+        }else if(myDice > comDice){
+            setResult('승리')
+        }else{
+            setResult('패배..')       
+        }
     }
 
+    const resetDice = ()=>{
+        setMyDice(1)
+        setComDice(1)
+    }
 
   return (
     <div>
 
         <h1>주사위게임</h1>
         <button onClick={throwDice}>던지기</button>
-        <button>초기화</button>
+        <button onClick={resetDice}>초기화</button>
 
-        
         <hr></hr>
-        
-
 
         <h3></h3>
 
         <div style={{display : 'flex'}}>
             
-            <Ex04Box player ='나'></Ex04Box>    
-            <Ex04Box player ='컴퓨터'></Ex04Box>    
+            <Ex04Box player ='나' dice={myDice}></Ex04Box>    
+            <Ex04Box player ='컴퓨터' dice={comDice}></Ex04Box>    
         
         </div>
 
-        <h2>결과</h2>
+        <h2>{result}</h2>
         
         <p>내가 던진 주사위 : {myDice}</p>
         <p>컴퓨터가 던진 주사위 : {comDice}</p>        

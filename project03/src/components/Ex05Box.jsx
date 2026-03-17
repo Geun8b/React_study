@@ -1,0 +1,16 @@
+import React from 'react'
+
+const Ex05Box = ({tr}) => {
+  return (
+    
+    <div style={{border : '10px solid gray', padding : '3%'}}>
+
+        <h3>교육운영부</h3>
+        <p>{tr}</p>
+
+    </div>
+
+  )
+}
+
+export default Ex05Box
