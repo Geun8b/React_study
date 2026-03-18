@@ -13,6 +13,7 @@ const Ex06 = () => {
     console.log('oddList', oddList)
     
     // map 방식 => True / False 값 반환 (불리언)
+    // map 함수는 컴포넌트 구조로 묶여 있어야 함
     let oddList2 = numList.map(item => item%2 === 1)
     console.log('oddList', oddList2)   // filter 와 map 차이점 보기
 

@@ -1,73 +1,84 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Ex04Box from '../components/Ex04Box'
+
 const Ex04 = () => {
 
-    // 주사위 게임을 해보자
-    // 1. 유저가 '던지기' 버튼을 누르면 throwDice 함수 실행
-    //   1-1) 두개의 주사위 눈이 랜덤으로 표시 (myDice, comDice)
-    //   1-2) 두개의 주사위 눈을 Ex04Box 로 전달
+  // 1. 주사위 상태
+  const [myDice, setMyDice] = useState(1)
+  const [comDice, setComDice] = useState(1)
 
-    // 2. Ex04Box로 가서 주사위 눈을 전달 받고 내용을 수정 (props)
-    // 3. 아래에 결과를 출력해보자
-    //  내가 더 크면 승리, 내가 더 작으면 패배, 같으면 동점
-    //  ※ 이 때, 내가 원하는 결과가 정확하게 나오지 않아도 괜찮습니다
-    // 4. 유저가 초기화 버튼을 누르면 다시 주사위는 1-1 로 돌아간다.(resetDice)
+  // 2. 점수 상태
+  const [myScore, setMyScore] = useState(0)
+  const [comScore, setComScore] = useState(0)
 
-    const [myDice, setMyDice] = useState(1)
-    const [comDice, setComDice] = useState(1)
-    const [result, setResult] = useState('게임 전')
+  // 3. 던지기 함수
+  const throwDice = () => {
+    const my = Math.floor(Math.random() * 6) + 1
+    const com = Math.floor(Math.random() * 6) + 1
 
-    // 램덤 주사위를 만드는 방법 중 하나 (랜덤한 숫자를 뽑아내는 자판기)
+    setMyDice(my)
+    setComDice(com)
 
-    const makeRandom = ()=>{
-        return parseInt(Math.random()*6)+1
+    // 점수 증가 로직
+    if (my > com) {
+      setMyScore(prev => prev + 1)
+    } else if (my < com) {
+      setComScore(prev => prev + 1)
     }
-    const throwDice = (e)=>{
-        console.log('던지기')
-        console.log('랜덤 주사위', makeRandom())
-        console.log('내가 던진 주사위는?', e.target.innerText)
+  }
 
-        setComDice(makeRandom())
-        setMyDice(makeRandom())
+  // 4. 초기화
+  const resetDice = () => {
+    setMyDice(1)
+    setComDice(1)
+    setMyScore(0)
+    setComScore(0)
+  }
 
-        if(myDice === comDice){
-            setResult('동점')
-        }else if(myDice > comDice){
-            setResult('승리')
-        }else{
-            setResult('패배..')       
-        }
-    }
+  // 5. 결과 메시지
+  const getResult = () => {
+    if (myScore >= 10) return "User Win"
+    if (comScore >= 10) return "Com Win"
 
-    const resetDice = ()=>{
-        setMyDice(1)
-        setComDice(1)
-    }
+    if (myDice > comDice) return "이겼어"
+    if (myDice < comDice) return "졌어"
+    return "쌤쌤"
+  }
 
   return (
     <div>
+      <h1>주사위 게임</h1>
 
-        <h1>주사위게임</h1>
-        <button onClick={throwDice}>던지기</button>
-        <button onClick={resetDice}>초기화</button>
+      {/* 버튼 */}
+      <button 
+        onClick={throwDice}
+        disabled={myScore >= 10 || comScore >= 10}
+      >
+        던지기
+      </button>
 
-        <hr></hr>
+      <button onClick={resetDice}>초기화</button>
 
-        <h3></h3>
+      <hr />
 
-        <div style={{display : 'flex'}}>
-            
-            <Ex04Box player ='나' dice={myDice}></Ex04Box>    
-            <Ex04Box player ='컴퓨터' dice={comDice}></Ex04Box>    
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
         
+        {/* 유저 */}
+        <div style={{ textAlign: 'center' }}>
+          <Ex04Box player='나' dice={myDice} />
+          <h2>{myScore}</h2>
         </div>
 
-        <h2>{result}</h2>
-        
-        <p>내가 던진 주사위 : {myDice}</p>
-        <p>컴퓨터가 던진 주사위 : {comDice}</p>        
+        {/* 컴퓨터 */}
+        <div style={{ textAlign: 'center' }}>
+          <Ex04Box player='컴퓨터' dice={comDice} />
+          <h2>{comScore}</h2>
+        </div>
 
-    
+      </div>
+
+      <h2>{getResult()}</h2>
+
     </div>
   )
 }

@@ -11,7 +11,8 @@ import { createRoot } from 'react-dom/client'
 // import App from './example/Ex03'
 
 // 4. useState 실습 (주사위게임)
-// import App from './example/Ex04'
+//  import App from './example/Ex04'
+ import App from './example/Ex04study'
 
 //===========================================
 
@@ -22,9 +23,15 @@ import { createRoot } from 'react-dom/client'
 // import App from './example/Ex05Lunch'
 
 // 6. filter함수
-import App from './example/Ex06'
+// import App from './example/Ex06'
 
 //==========================================
+
+// 7. useEffect개념
+// import App from './example/Ex07'
+
+// 8.
+// import App from './example/Ex08'
 
 createRoot(document.getElementById('root')).render(
 
