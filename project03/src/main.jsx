@@ -9,10 +9,11 @@ import { createRoot } from 'react-dom/client'
 
 // 3. useState 실습 (랜덤게임)
 // import App from './example/Ex03'
+import App from './example/Ex03study'
 
 // 4. useState 실습 (주사위게임)
 //  import App from './example/Ex04'
- import App from './example/Ex04study'
+// import App from './example/Ex04study'
 
 //===========================================
 
