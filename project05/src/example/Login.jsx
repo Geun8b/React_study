@@ -2,6 +2,8 @@ import React from 'react'
 import {useRef} from 'react'
 import {useNavigate, useSearchParams} from 'react-router-dom'
 
+import axios from 'axios'
+
 const Login = () => {
 
     const idRef = useRef()
@@ -22,11 +24,34 @@ const Login = () => {
         let joinId = query.get('id')
         let joinPw = query.get('pw')
 
-        if(inputId == joinId && inputPw == joinPw){
-            nav('/?nick='+query.get('nick'))
-        } else {
-            alert('아이디 비밀번호 다시입력')
-        }
+        // DB에 있는 회원 데이터와 비교해서
+        // 로그인 성공시 => Home 이동
+        // 실패 => 로그인 실패 알림
+
+        axios({
+
+        url : 'http://localhost:3001/login',
+            method : 'post',
+            data : {
+                id : inputId,
+                pw : inputPw,
+
+            }
+        })
+        .then((res)=>{
+            if(res.data == 1){
+                nav('/')
+            }else{
+                alert('로그인 실패')
+            }
+        })
+
+
+        // if(inputId == joinId && inputPw == joinPw){
+        //     nav('/?nick='+query.get('nick'))
+        // } else {
+        //     alert('아이디 비밀번호 다시입력')
+        // }
       
     }
 
