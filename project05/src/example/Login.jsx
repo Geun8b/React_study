@@ -34,14 +34,16 @@ const Login = () => {
             method : 'post',
             data : {
                 id : inputId,
-                pw : inputPw,
+                pw : inputPw
 
             }
         })
         .then((res)=>{
+            // 로그인 성공시 => Home 이동
             if(res.data == 1){
                 nav('/')
-            }else{
+            } // 로그인 실패시 알림
+            else{
                 alert('로그인 실패')
             }
         })
